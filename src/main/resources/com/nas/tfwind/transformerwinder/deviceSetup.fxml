@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="320.0" stylesheets="@css/bootstrapfx.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nas.tfwind.transformerwinder.deviceSetupController">
+    <children>
+      <Accordion prefHeight="236.0" prefWidth="336.0">
+         <panes>
+             <TitledPane animated="false" prefHeight="75.0" prefWidth="325.0" text="Encoder Setup">
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="323.0">
+                     <TextField layoutX="146.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="No of Pulses per Rotation" />
+                     <Label alignment="CENTER" layoutX="14.0" layoutY="13.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Encoder Resolution" textFill="WHITE" wrapText="true">
+                         <font>
+                             <Font name="System Bold" size="12.0" />
+                         </font>
+                     </Label>
+                 </AnchorPane>
+             </TitledPane>
+            <TitledPane prefHeight="63.0" prefWidth="325.0" text="Stepper Setup">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                          <Label alignment="CENTER" layoutX="6.0" layoutY="13.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Steps per MM:" textFill="WHITE" wrapText="true">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Label>
+                          <TextField layoutX="145.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="1 to 32000" />
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="45.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Screw Pitch (mm)" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="145.0" layoutY="46.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="76.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Gear Ratio" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="145.0" layoutY="77.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane layoutX="10.0" layoutY="33.0" prefHeight="55.0" prefWidth="325.0" text="Spindle Setup">
+               <content>
+                  <AnchorPane prefHeight="86.0" prefWidth="323.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="13.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Accelration" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="145.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="1 to 32000" />
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="45.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Decelration" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="145.0" layoutY="46.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane layoutX="10.0" layoutY="56.0" prefHeight="55.0" prefWidth="325.0" text="Slave Setup">
+               <content>
+                  <AnchorPane prefHeight="129.0" prefWidth="334.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="13.0" prefHeight="25.0" prefWidth="106.0" styleClass="lbl-default" text="COM Port" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="portList" layoutX="117.0" layoutY="13.0" prefHeight="23.0" prefWidth="114.0" promptText="Select Port" />
+                        <Label alignment="CENTER" layoutX="6.0" layoutY="45.0" prefHeight="25.0" prefWidth="105.0" styleClass="lbl-default" text="Baud Rate" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="baudList" layoutX="117.0" layoutY="45.0" prefHeight="23.0" prefWidth="114.0" promptText="Select Baud" />
+                        <Button fx:id="connectBtn" layoutX="109.0" layoutY="81.0" mnemonicParsing="false" onAction="#connectModbus" styleClass="btn-success" text="Connect">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="modBusStatus" layoutX="110.0" layoutY="120.0" text="Status:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="237.0" layoutY="12.0" mnemonicParsing="false" onAction="#refreshPorts" styleClass="btn-success" text="Refresh">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+         </panes>
+      </Accordion>
+        <ButtonBar layoutX="40.0" layoutY="232.0" prefHeight="40.0" prefWidth="200.0">
+            <buttons>
+                <Button mnemonicParsing="false" styleClass="btn-success" text="Save" />
+                <Button layoutX="135.0" layoutY="18.0" mnemonicParsing="false" styleClass="btn-danger" text="Cancel" />
+            </buttons>
+        </ButtonBar>
+    </children>
+</AnchorPane>

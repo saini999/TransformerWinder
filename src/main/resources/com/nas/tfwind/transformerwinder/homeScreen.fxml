@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="360.0" prefWidth="680.0" stylesheets="@css/bootstrapfx.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nas.tfwind.transformerwinder.homeScreenController">
+   <children>
+      <Separator layoutX="352.0" layoutY="27.0" orientation="VERTICAL" prefHeight="200.0" />
+      <Label alignment="CENTER" layoutX="21.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-default" text="Turns:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutX="92.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="184.0" layoutY="27.0" prefHeight="32.0" prefWidth="89.0" styleClass="lbl-default" text="Set Turns:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="281.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="21.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-default" text="Y Pos:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="92.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="184.0" layoutY="78.0" prefHeight="32.0" prefWidth="89.0" styleClass="lbl-default" text="RPM:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="281.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ProgressBar layoutX="146.0" layoutY="127.0" prefWidth="200.0" />
+      <Slider layoutX="146.0" layoutY="148.0" max="150.0" min="50.0" prefHeight="32.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" />
+      <Label layoutX="53.0" layoutY="128.0" text="Speed (%)">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="159.0" text="Speed Override (%)">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TabPane fx:id="tabContainer" layoutX="358.0" layoutY="7.0" prefHeight="300.0" prefWidth="320.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Jog" />
+          <Tab text="Program" />
+           <Tab text="Settings" />
+        </tabs>
+      </TabPane>
+      <Button fx:id="startBtn" layoutX="27.0" layoutY="215.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="99.0" text="Start">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-success" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+      <Button fx:id="startBtn1" layoutX="142.0" layoutY="215.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="89.0" text="Stop">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-danger" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+      <Button fx:id="startBtn11" layoutX="246.0" layoutY="215.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="89.0" text="Reset">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-primary" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+      <Button layoutX="37.0" layoutY="276.0" mnemonicParsing="false" text="&lt; Y-">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-warning" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+      <Button layoutX="252.0" layoutY="275.0" mnemonicParsing="false" text="Y+ &gt;">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <styleClass>
+            <String fx:value="btn-warning" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+      <Label layoutX="130.0" layoutY="280.0" text="Adjust Y Axis">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="54.0" layoutY="324.0" text="Step Size: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="151.0" layoutY="323.0" prefWidth="150.0" promptText="mm" />
+   </children>
+</AnchorPane>
