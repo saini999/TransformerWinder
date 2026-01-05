@@ -16,10 +16,8 @@ public class homeScreen extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
     public void start(Stage stage) throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(homeScreen.class.getResource("homeScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 680, 360);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
@@ -31,6 +29,8 @@ public class homeScreen extends Application {
         stage.centerOnScreen();
         stage.setScene(scene);
         stage.show();
+
+
 
     }
 }

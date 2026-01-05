@@ -28,11 +28,13 @@ public class deviceSetupController {
     @FXML
     private Button connectBtn;
 
+
     @FXML
     public void initialize() {
         refreshPorts();
         updateBaudList();
         modbusHandler modbus = modbusHandler.getInstance();
+
         boolean isConnected = modbus.isConnected();
         if(isConnected){
             connectBtn.setText("Disconnect");
@@ -56,6 +58,7 @@ public class deviceSetupController {
         portList.getItems().addAll(SerialUtils.getAvailablePorts());
     }
 
+
     @FXML
     private void connectModbus(){
         String selectedPort = portList.getValue();
@@ -71,13 +74,16 @@ public class deviceSetupController {
             return;
         }
         modbusHandler modbus = modbusHandler.getInstance();
+        mbIO mbio = new mbIO(modbus);
         boolean isConnected = modbus.isConnected();
         if(isConnected){
+            mbio.stopModbusTask();
             modbus.disconnect();
         }
         else {
             boolean connected = modbus.connect(selectedPort, selectedBaud, 1000);
             System.out.println(connected ? "✅ Connected!" : "❌ Failed to connect");
+            mbio.runModbusTask();
         }
         isConnected = modbus.isConnected();
         if(isConnected){
