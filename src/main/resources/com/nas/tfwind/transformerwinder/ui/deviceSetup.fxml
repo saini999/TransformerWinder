@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="320.0" stylesheets="@css/bootstrapfx.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nas.tfwind.transformerwinder.deviceSetupController">
+<AnchorPane prefHeight="300.0" prefWidth="320.0" stylesheets="@../css/bootstrapfx.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nas.tfwind.transformerwinder.ui.deviceSetupController">
     <children>
       <Accordion prefHeight="236.0" prefWidth="336.0">
          <panes>

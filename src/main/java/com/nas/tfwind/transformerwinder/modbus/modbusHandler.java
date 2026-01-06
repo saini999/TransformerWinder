@@ -1,4 +1,4 @@
-package com.nas.tfwind.transformerwinder;
+package com.nas.tfwind.transformerwinder.modbus;
 
 import com.ghgande.j2mod.modbus.ModbusException;
 import com.ghgande.j2mod.modbus.facade.ModbusSerialMaster;
@@ -147,10 +147,10 @@ public class modbusHandler {
         Register[] writeRegs = new Register[REG_COUNT];
         for (int i = 0; i < REG_COUNT; i++) {
             SimpleRegister r = new SimpleRegister(0);
-            r.setValue(txRegs[i] & 0xFFFF);   // 🔥 CRITICAL FIX
+            r.setValue(txRegs[i] & 0xFFFF);
             writeRegs[i] = r;
         }
-        dumpTxRegs(writeRegs);
+        //dumpTxRegs(writeRegs);
         master.writeMultipleRegisters(slaveId, REG_START_ADDR, writeRegs);
 
         // READ ALL REGISTERS
@@ -160,7 +160,7 @@ public class modbusHandler {
         for (int i = 0; i < REG_COUNT; i++) {
             rxRegs[i] = readRegs[i].getValue();
         }
-        dumpRxRegs(readRegs);
+        //dumpRxRegs(readRegs);
     }
 
 

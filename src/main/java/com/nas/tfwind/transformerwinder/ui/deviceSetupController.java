@@ -1,5 +1,8 @@
-package com.nas.tfwind.transformerwinder;
+package com.nas.tfwind.transformerwinder.ui;
 import com.fazecast.jSerialComm.SerialPort;
+import com.nas.tfwind.transformerwinder.logicHandlers.LogicScheduler;
+import com.nas.tfwind.transformerwinder.modbus.mbIO;
+import com.nas.tfwind.transformerwinder.modbus.modbusHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -58,7 +61,6 @@ public class deviceSetupController {
         portList.getItems().addAll(SerialUtils.getAvailablePorts());
     }
 
-
     @FXML
     private void connectModbus(){
         String selectedPort = portList.getValue();
@@ -78,12 +80,14 @@ public class deviceSetupController {
         boolean isConnected = modbus.isConnected();
         if(isConnected){
             mbio.stopModbusTask();
+            LogicScheduler.getInstance().stop();
             modbus.disconnect();
         }
         else {
             boolean connected = modbus.connect(selectedPort, selectedBaud, 1000);
             System.out.println(connected ? "✅ Connected!" : "❌ Failed to connect");
             mbio.runModbusTask();
+            LogicScheduler.getInstance().start();
         }
         isConnected = modbus.isConnected();
         if(isConnected){

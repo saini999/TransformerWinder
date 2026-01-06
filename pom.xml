@@ -147,7 +147,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.nas.tfwind.transformerwinder.homeScreen</mainClass>
+                            <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>TransformerWinder</jlinkZipName>
                             <jlinkImageName>TransformerWinderImage</jlinkImageName>
@@ -187,7 +187,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.nas.tfwind.transformerwinder.homeScreen</mainClass>
+                                    <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

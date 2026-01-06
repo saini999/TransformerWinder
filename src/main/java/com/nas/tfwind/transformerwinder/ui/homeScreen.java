@@ -1,4 +1,4 @@
-package com.nas.tfwind.transformerwinder;
+package com.nas.tfwind.transformerwinder.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
 
 public class homeScreen extends Application {
 
@@ -18,19 +16,16 @@ public class homeScreen extends Application {
     }
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(homeScreen.class.getResource("homeScreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(homeScreen.class.getResource("/com/nas/tfwind/transformerwinder/ui/homeScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 680, 360);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         stage.setTitle("NAS: Transformer Winder");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("icons/app_icon.jpg")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/nas/tfwind/transformerwinder/icons/app_icon.jpg")));
         stage.setResizable(false);
         stage.setWidth(680);
         stage.setHeight(360);
         stage.centerOnScreen();
         stage.setScene(scene);
         stage.show();
-
-
-
     }
 }

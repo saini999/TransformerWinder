@@ -23,7 +23,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.nas.tfwind.transformerwinder.homeScreen</mainClass>
+              <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
@@ -51,7 +51,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.nas.tfwind.transformerwinder.homeScreen</mainClass>
+              <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
@@ -67,7 +67,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>com.nas.tfwind.transformerwinder.homeScreen</mainClass>
+              <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -84,7 +84,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.nas.tfwind.transformerwinder.homeScreen</mainClass>
+                  <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
                 </transformer>
               </transformers>
             </configuration>
