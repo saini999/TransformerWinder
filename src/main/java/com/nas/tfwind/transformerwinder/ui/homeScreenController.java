@@ -37,10 +37,72 @@ public class homeScreenController {
             curTurns.textProperty().bind(Bindings.format("%.2f",data.ui.curTurns));
             setTurns.textProperty().bind(Bindings.format("%.2f",data.ui.setTurns));
             rpm.textProperty().bind(Bindings.format("%.2f",data.ui.rpm));
+            ypos.textProperty().bind(Bindings.format("%.2f",data.ui.yPos));
+            curSpeed.progressProperty().bind(data.ui.showSpeed);
+            startBtn.disableProperty().set(true);
+            stopBtn.disableProperty().set(true);
+            resetBtn.disableProperty().set(true);
+            data.ui.isConnected.addListener((obs, wasConnected, isConnected) -> {
+                if(isConnected){
+                    connected();
+                } else {
+                    disConnected();
+                }
+            });
         } catch (IOException e){
             e.printStackTrace();
         }
     }
+    @FXML
+    void runMachine(){
+        data.runMachine = true;
+        if(data.runMachine){
+            startBtn.setText("Running");
+            startBtn.disableProperty().set(true);
+            stopBtn.disableProperty().set(false);
+            stopBtn.setText("Stop");
+        } else {
+            startBtn.setText("Start");
+            startBtn.disableProperty().set(false);
+            stopBtn.disableProperty().set(true);
+            stopBtn.setText("Stopped");
+        }
+    }
+    @FXML
+    void stopMachine(){
+        data.runMachine = false;
+        if(data.runMachine){
+            startBtn.setText("Running");
+            startBtn.disableProperty().set(true);
+            stopBtn.disableProperty().set(false);
+            stopBtn.setText("Stop");
+        } else {
+            startBtn.setText("Start");
+            startBtn.disableProperty().set(false);
+            stopBtn.disableProperty().set(true);
+            stopBtn.setText("Stopped");
+        }
+    }
+
+    public void connected(){
+        if(data.runMachine){
+            startBtn.setText("Running");
+            startBtn.disableProperty().set(true);
+            stopBtn.disableProperty().set(false);
+            stopBtn.setText("Stop");
+        } else {
+            startBtn.setText("Start");
+            startBtn.disableProperty().set(false);
+            stopBtn.disableProperty().set(true);
+            stopBtn.setText("Stopped");
+        }
+    }
+    public void disConnected() {
+        startBtn.disableProperty().set(true);
+        stopBtn.disableProperty().set(true);
+        resetBtn.disableProperty().set(true);
+    }
+
 
 }
 

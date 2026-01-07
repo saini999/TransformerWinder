@@ -1,6 +1,9 @@
 package com.nas.tfwind.transformerwinder.modbus;
 
 import com.nas.tfwind.transformerwinder.logicHandlers.LogicScheduler;
+import com.nas.tfwind.transformerwinder.model.ControlAddr;
+import com.nas.tfwind.transformerwinder.model.ControlReg;
+import com.nas.tfwind.transformerwinder.model.RegAddr;
 import com.nas.tfwind.transformerwinder.model.model;
 
 import java.util.concurrent.Executors;
@@ -47,29 +50,31 @@ public class mbIO {
     }
 
     private void buildDataBlock() {
-        modbus.setBitInReg(0, 0, sync);
-        modbus.setFloat(2, 15.0f);//setTurns
-        modbus.setFloat(6, 12.0f);//SetYPos
-        modbus.writeReg(12, 0);//speed
-        modbus.writeReg(13, 0);//power
-        modbus.writeReg(14, 1600);//Encoder Res
-        modbus.writeReg(15, 200);//Step Per Rev
-        modbus.writeReg(16, 10);//Step Per Rev
-        modbus.setFloat(18, 1.0f);
-        if(!settingUpdated){
-            modbus.setBitInReg(0, 6, true);
-        }
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.SYNC.addr, sync);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.MOVESTEP.addr, data.control.moveStep);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.ZEROSTEP.addr, data.control.setStepZero);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.RESETENC.addr, data.control.resetEnc);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.DIR_MOTOR.addr, data.control.motorDir);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.RUN_MOTOR.addr, data.control.runMotor);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.UPDATE_PARAMS.addr, data.control.updateSettings);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.RUN_REF.addr, data.control.runRef);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.INVERT_STEP.addr, data.control.invertStepDir);
+        modbus.setFloat(RegAddr.SET_TURNS.addr, data.reg.setTurns);
+        modbus.setFloat(RegAddr.SET_YPOS.addr, data.reg.setYPos);
+        modbus.writeReg(RegAddr.SPEED.addr, data.reg.speed);
+        modbus.writeReg(RegAddr.ENC_RES.addr, data.reg.encRes);
+        modbus.writeReg(RegAddr.STEP_RES.addr, data.reg.stepPerRev);
+        modbus.setFloat(RegAddr.SCREW_PITCH.addr, data.reg.screwPitch);
     }
 
-    boolean settingUpdated = false;
-
     private void updateUi() {
-
-        data.ui.setRpm(modbus.getFloat(10));
-        System.out.println("RPM:" + modbus.getFloat(10));
-        data.ui.setCurTurns(modbus.getFloat(4));
-        System.out.println("Turn:" + modbus.getFloat(4));
-        System.out.println("SYNC LED: " + modbus.getBitInReg(0,0));
+        data.ui.setRpm(modbus.getFloat(RegAddr.RPM.addr));
+        data.ui.setCurTurns(modbus.getFloat(RegAddr.CUR_TURNS.addr));
+        data.ui.setSetTurns(modbus.getFloat(RegAddr.SET_TURNS.addr));
+        data.ui.setShowSpeed(modbus.getFloat(RegAddr.SPEED.addr));
+        data.reg.rpm = modbus.getFloat(RegAddr.RPM.addr);
+        data.reg.curTurns = modbus.getFloat(RegAddr.CUR_TURNS.addr);
+        data.reg.curYPos = modbus.getFloat(RegAddr.CUR_YPOS.addr);
     }
 
 }

@@ -10,10 +10,10 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <TextField layoutX="144.0" layoutY="26.0" promptText="1 to 10000" />
+      <TextField fx:id="numTurns" layoutX="144.0" layoutY="26.0" promptText="1 to 10000" />
       <ButtonBar layoutX="40.0" layoutY="232.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="progSaveBtn" mnemonicParsing="false" styleClass="btn-success" text="Save" />
+          <Button fx:id="progSaveBtn" mnemonicParsing="false" onAction="#runSave" styleClass="btn-success" text="Save" />
             <Button fx:id="progCancelBtn" layoutX="135.0" layoutY="18.0" mnemonicParsing="false" styleClass="btn-danger" text="Cancel" />
         </buttons>
       </ButtonBar>
@@ -22,24 +22,24 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="144.0" layoutY="59.0" promptText="0.01 to 100.00" />
+      <TextField fx:id="sizeWire" layoutX="144.0" layoutY="59.0" promptText="0.01 to 100.00" />
       <Label alignment="CENTER" layoutX="14.0" layoutY="93.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Boben Length (mm):" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="144.0" layoutY="94.0" promptText="1.00 to 100.00" />
+      <TextField fx:id="bobenLength" layoutX="144.0" layoutY="94.0" promptText="1.00 to 100.00" />
       <Label alignment="CENTER" layoutX="14.0" layoutY="126.0" prefHeight="40.0" prefWidth="126.0" styleClass="lbl-default" text="Max Speed:" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Slider layoutX="144.0" layoutY="126.0" prefHeight="40.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="maxSpeed" min="0" max="100" layoutX="144.0" layoutY="126.0" prefHeight="40.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
       <Label alignment="CENTER" layoutX="14.0" layoutY="172.0" prefHeight="40.0" prefWidth="126.0" styleClass="lbl-default" text="Start Power:" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Slider layoutX="144.0" layoutY="172.0" prefHeight="40.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="startPower" min="0" max="100" layoutX="144.0" layoutY="172.0" prefHeight="40.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
    </children>
 </AnchorPane>

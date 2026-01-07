@@ -1,5 +1,7 @@
 package com.nas.tfwind.transformerwinder.logicHandlers;
 
+import com.nas.tfwind.transformerwinder.model.model;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,11 +33,20 @@ public class LogicScheduler {
         try {
             runTasks();
         } catch (Throwable t) {
-            t.printStackTrace(); // never let scheduler die silently
+            t.printStackTrace();
         }
     }
 
     void runTasks() {
-        // to be imported from other handlers
+        if(model.getInstance().saveData){
+            model.getInstance().control.updateSettings = true;
+        }
+        SpindleHandler.getInstance().spindleTask();
+
+
+        //at last after all tasks complete
+        if(model.getInstance().saveData){
+            model.getInstance().saveData = false;
+        }
     }
 }

@@ -8,41 +8,41 @@
 <AnchorPane prefHeight="360.0" prefWidth="680.0" stylesheets="@../css/bootstrapfx.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nas.tfwind.transformerwinder.ui.homeScreenController">
    <children>
       <Separator layoutX="352.0" layoutY="27.0" orientation="VERTICAL" prefHeight="200.0" />
-      <Label alignment="CENTER" layoutX="21.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-default" text="Turns:" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="5.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-default" text="Turns:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label fx:id="curTurns" alignment="CENTER" layoutX="92.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+      <Label fx:id="curTurns" alignment="CENTER" layoutX="73.0" layoutY="27.0" prefHeight="32.0" prefWidth="88.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="184.0" layoutY="27.0" prefHeight="32.0" prefWidth="89.0" styleClass="lbl-default" text="Set Turns:" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="170.0" layoutY="27.0" prefHeight="32.0" prefWidth="89.0" styleClass="lbl-default" text="Set Turns:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="setTurns" alignment="CENTER" layoutX="281.0" layoutY="27.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+      <Label fx:id="setTurns" alignment="CENTER" layoutX="261.0" layoutY="27.0" prefHeight="32.0" prefWidth="88.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="21.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-default" text="Y Pos:" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="5.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-default" text="Y Pos:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ypos" alignment="CENTER" layoutX="92.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+      <Label fx:id="ypos" alignment="CENTER" layoutX="73.0" layoutY="78.0" prefHeight="32.0" prefWidth="88.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="184.0" layoutY="78.0" prefHeight="32.0" prefWidth="89.0" styleClass="lbl-default" text="RPM:" textFill="WHITE">
+      <Label alignment="CENTER" layoutX="170.0" layoutY="78.0" prefHeight="32.0" prefWidth="89.0" styleClass="lbl-default" text="RPM:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="rpm" alignment="CENTER" layoutX="281.0" layoutY="78.0" prefHeight="32.0" prefWidth="65.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
+      <Label fx:id="rpm" alignment="CENTER" layoutX="261.0" layoutY="78.0" prefHeight="32.0" prefWidth="88.0" styleClass="lbl-info" text="NaN" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -66,7 +66,7 @@
            <Tab text="Settings" />
         </tabs>
       </TabPane>
-      <Button fx:id="startBtn" layoutX="27.0" layoutY="215.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="99.0" text="Start">
+      <Button fx:id="startBtn" layoutX="27.0" layoutY="215.0" mnemonicParsing="false" onAction="#runMachine" prefHeight="45.0" prefWidth="99.0" text="Start">
          <font>
             <Font size="14.0" />
          </font>
@@ -75,7 +75,7 @@
             <String fx:value="btn" />
          </styleClass>
       </Button>
-      <Button fx:id="stopBtn" layoutX="142.0" layoutY="215.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="89.0" text="Stop">
+      <Button fx:id="stopBtn" layoutX="142.0" layoutY="215.0" mnemonicParsing="false" onAction="#stopMachine" prefHeight="45.0" prefWidth="89.0" text="Stop">
          <font>
             <Font size="24.0" />
          </font>

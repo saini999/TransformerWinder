@@ -3,6 +3,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import com.nas.tfwind.transformerwinder.logicHandlers.LogicScheduler;
 import com.nas.tfwind.transformerwinder.modbus.mbIO;
 import com.nas.tfwind.transformerwinder.modbus.modbusHandler;
+import com.nas.tfwind.transformerwinder.model.model;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,6 +12,8 @@ import javafx.scene.control.Label;
 import java.util.ArrayList;
 import java.util.List;
 public class deviceSetupController {
+
+    model data = model.getInstance();
 
     public class SerialUtils {
         public static List<String> getAvailablePorts() {
@@ -61,6 +64,8 @@ public class deviceSetupController {
         portList.getItems().addAll(SerialUtils.getAvailablePorts());
     }
 
+    boolean firstRun = true;
+
     @FXML
     private void connectModbus(){
         String selectedPort = portList.getValue();
@@ -82,12 +87,21 @@ public class deviceSetupController {
             mbio.stopModbusTask();
             LogicScheduler.getInstance().stop();
             modbus.disconnect();
+            data.ui.setIsConnected(false);
         }
         else {
             boolean connected = modbus.connect(selectedPort, selectedBaud, 1000);
             System.out.println(connected ? "✅ Connected!" : "❌ Failed to connect");
-            mbio.runModbusTask();
-            LogicScheduler.getInstance().start();
+            if(connected) {
+                mbio.runModbusTask();
+                LogicScheduler.getInstance().start();
+                data.ui.setIsConnected(true);
+            }
+            if(connected && firstRun){
+                data.reg.encRes = 1600;
+                data.control.updateSettings = true;
+                firstRun = false;
+            }
         }
         isConnected = modbus.isConnected();
         if(isConnected){
