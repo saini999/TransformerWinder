@@ -38,6 +38,10 @@ public class LogicScheduler {
     }
 
     void runTasks() {
+        if(!model.getInstance().isConnected){
+            executor.shutdownNow();
+            running = false;
+        }
         if(model.getInstance().saveData){
             model.getInstance().control.updateSettings = true;
         }

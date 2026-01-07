@@ -5,9 +5,7 @@ import com.nas.tfwind.transformerwinder.modbus.mbIO;
 import com.nas.tfwind.transformerwinder.modbus.modbusHandler;
 import com.nas.tfwind.transformerwinder.model.model;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +32,9 @@ public class deviceSetupController {
     @FXML
     private Button connectBtn;
 
+    @FXML
+    private TextField encRes, stepPerRev, screwPitch, gearRatio, acceleration, deceleration;
+
 
     @FXML
     public void initialize() {
@@ -42,6 +43,11 @@ public class deviceSetupController {
         modbusHandler modbus = modbusHandler.getInstance();
 
         boolean isConnected = modbus.isConnected();
+        updateStatus(isConnected);
+        setupNumberFields();
+    }
+
+    private void updateStatus(boolean isConnected) {
         if(isConnected){
             connectBtn.setText("Disconnect");
             connectBtn.getStyleClass().clear();
@@ -86,6 +92,7 @@ public class deviceSetupController {
         if(isConnected){
             mbio.stopModbusTask();
             LogicScheduler.getInstance().stop();
+            data.isConnected = false;
             modbus.disconnect();
             data.ui.setIsConnected(false);
         }
@@ -96,6 +103,7 @@ public class deviceSetupController {
                 mbio.runModbusTask();
                 LogicScheduler.getInstance().start();
                 data.ui.setIsConnected(true);
+                data.isConnected = true;
             }
             if(connected && firstRun){
                 data.reg.encRes = 1600;
@@ -104,20 +112,41 @@ public class deviceSetupController {
             }
         }
         isConnected = modbus.isConnected();
-        if(isConnected){
-            connectBtn.setText("Disconnect");
-            connectBtn.getStyleClass().clear();
-            connectBtn.getStyleClass().add("btn-danger");
-            connectBtn.getStyleClass().add("btn");
-            modBusStatus.setText("Status: ✅ Connected!");
-        } else {
-            connectBtn.setText("Connect");
-            connectBtn.getStyleClass().clear();
-            connectBtn.getStyleClass().add("btn-success");
-            connectBtn.getStyleClass().add("btn");
-            modBusStatus.setText("Status: ❌ Disconnected.");
-        }
+        updateStatus(isConnected);
     }
+
+    @FXML
+    private void runSave(){
+        data.reg.encRes = Integer.parseInt(encRes.getText());
+        data.reg.stepPerRev = Integer.parseInt(stepPerRev.getText());
+        data.reg.screwPitch = Float.parseFloat(screwPitch.getText());
+        data.reg.gearRatio = Float.parseFloat(gearRatio.getText());
+        data.accelration  = Math.min(Float.parseFloat(acceleration.getText()), 100.0f);
+        data.deccelration = Math.min(Float.parseFloat(deceleration.getText()), 100.0f);
+        data.saveData = true;
+    }
+
+    private void setupNumberFields(){
+        encRes.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().matches("-?\\d*(\\.\\d*)?") ? change : null
+        ));
+        stepPerRev.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().matches("-?\\d*(\\.\\d*)?") ? change : null
+        ));
+        screwPitch.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().matches("-?\\d*(\\.\\d*)?") ? change : null
+        ));
+        gearRatio.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().matches("-?\\d*(\\.\\d*)?") ? change : null
+        ));
+        acceleration.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().matches("-?\\d*(\\.\\d*)?") ? change : null
+        ));
+        deceleration.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().matches("-?\\d*(\\.\\d*)?") ? change : null
+        ));
+    }
+
 
     private void updateBaudList(){
         int baud[] = {110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};

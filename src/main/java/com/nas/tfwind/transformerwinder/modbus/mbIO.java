@@ -71,7 +71,7 @@ public class mbIO {
         data.ui.setRpm(modbus.getFloat(RegAddr.RPM.addr));
         data.ui.setCurTurns(modbus.getFloat(RegAddr.CUR_TURNS.addr));
         data.ui.setSetTurns(modbus.getFloat(RegAddr.SET_TURNS.addr));
-        data.ui.setShowSpeed(modbus.getFloat(RegAddr.SPEED.addr));
+        data.ui.setShowSpeed(modbus.getReg(RegAddr.SPEED.addr));
         data.reg.rpm = modbus.getFloat(RegAddr.RPM.addr);
         data.reg.curTurns = modbus.getFloat(RegAddr.CUR_TURNS.addr);
         data.reg.curYPos = modbus.getFloat(RegAddr.CUR_YPOS.addr);

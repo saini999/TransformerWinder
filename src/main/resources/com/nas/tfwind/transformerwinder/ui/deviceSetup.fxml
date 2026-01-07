@@ -10,7 +10,7 @@
          <panes>
              <TitledPane animated="false" prefHeight="75.0" prefWidth="325.0" text="Encoder Setup">
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="323.0">
-                     <TextField layoutX="146.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="No of Pulses per Rotation" />
+                     <TextField fx:id="encRes" layoutX="146.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="No of Pulses per Rotation" />
                      <Label alignment="CENTER" layoutX="14.0" layoutY="13.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Encoder Resolution" textFill="WHITE" wrapText="true">
                          <font>
                              <Font name="System Bold" size="12.0" />
@@ -27,19 +27,19 @@
                                   <Font name="System Bold" size="12.0" />
                               </font>
                           </Label>
-                          <TextField layoutX="145.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="1 to 32000" />
+                          <TextField fx:id="stepPerRev" layoutX="145.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="1 to 32000" />
                         <Label alignment="CENTER" layoutX="6.0" layoutY="45.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Screw Pitch (mm)" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="145.0" layoutY="46.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
+                        <TextField fx:id="screwPitch" layoutX="145.0" layoutY="46.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
                         <Label alignment="CENTER" layoutX="6.0" layoutY="76.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Gear Ratio" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="145.0" layoutY="77.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
+                        <TextField fx:id="gearRatio" layoutX="145.0" layoutY="77.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
                      </children>
                   </AnchorPane>
                </content>
@@ -53,13 +53,13 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="145.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="1 to 32000" />
+                        <TextField fx:id="acceleration" layoutX="145.0" layoutY="14.0" prefHeight="23.0" prefWidth="158.0" promptText="1 to 32000" />
                         <Label alignment="CENTER" layoutX="6.0" layoutY="45.0" prefHeight="25.0" prefWidth="126.0" styleClass="lbl-default" text="Decelration" textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="145.0" layoutY="46.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
+                        <TextField fx:id="deceleration" layoutX="145.0" layoutY="46.0" prefHeight="23.0" prefWidth="158.0" promptText="0.01 to 100.00" />
                      </children>
                   </AnchorPane>
                </content>
@@ -103,7 +103,7 @@
       </Accordion>
         <ButtonBar layoutX="40.0" layoutY="232.0" prefHeight="40.0" prefWidth="200.0">
             <buttons>
-                <Button mnemonicParsing="false" styleClass="btn-success" text="Save" />
+                <Button fx:id="setupSaveBtn" onAction="#runSave" mnemonicParsing="false" styleClass="btn-success" text="Save" />
                 <Button layoutX="135.0" layoutY="18.0" mnemonicParsing="false" styleClass="btn-danger" text="Cancel" />
             </buttons>
         </ButtonBar>
