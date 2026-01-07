@@ -66,7 +66,7 @@
            <Tab text="Settings" />
         </tabs>
       </TabPane>
-      <Button fx:id="startBtn" layoutX="27.0" layoutY="215.0" mnemonicParsing="false" onAction="#runMachine" prefHeight="45.0" prefWidth="99.0" text="Start">
+      <Button fx:id="startBtn" layoutX="27.0" layoutY="228.0" mnemonicParsing="false" onAction="#runMachine" prefHeight="32.0" prefWidth="99.0" text="Start">
          <font>
             <Font size="14.0" />
          </font>
@@ -75,7 +75,7 @@
             <String fx:value="btn" />
          </styleClass>
       </Button>
-      <Button fx:id="stopBtn" layoutX="142.0" layoutY="215.0" mnemonicParsing="false" onAction="#stopMachine" prefHeight="45.0" prefWidth="89.0" text="Stop">
+      <Button fx:id="stopBtn" layoutX="142.0" layoutY="228.0" mnemonicParsing="false" onAction="#stopMachine" prefHeight="32.0" prefWidth="89.0" text="Stop">
          <font>
             <Font size="24.0" />
          </font>
@@ -84,7 +84,7 @@
             <String fx:value="btn" />
          </styleClass>
       </Button>
-      <Button fx:id="resetBtn" layoutX="246.0" layoutY="215.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="89.0" text="Reset">
+      <Button fx:id="resetBtn" layoutX="246.0" layoutY="228.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="89.0" text="Reset">
          <font>
             <Font size="24.0" />
          </font>
@@ -122,5 +122,7 @@
          </font>
       </Label>
       <ComboBox fx:id="stepSize" layoutX="151.0" layoutY="323.0" prefWidth="150.0" promptText="mm" />
+      <CheckBox fx:id="resumeCurrent" layoutX="82.0" layoutY="194.0" mnemonicParsing="false" onAction="#resumeCurrent" text="Resume Current" />
+      <CheckBox fx:id="reverseWind" layoutX="214.0" layoutY="194.0" mnemonicParsing="false" onAction="#reverseWind" text="Reverse Wind" />
    </children>
 </AnchorPane>

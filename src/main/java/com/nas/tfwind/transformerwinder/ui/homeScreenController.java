@@ -25,6 +25,9 @@ public class homeScreenController {
     private Button startBtn, stopBtn, resetBtn, negYjog, posYjog;
     @FXML
     private ComboBox<Float> stepSize;
+
+    @FXML
+    private CheckBox reverseWind, resumeCurrent;
     @FXML
     public void initialize() {
         try {
@@ -49,6 +52,8 @@ public class homeScreenController {
                     disConnected();
                 }
             });
+            reverseWind.selectedProperty().set(false);
+            resumeCurrent.selectedProperty().set(false);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -56,47 +61,44 @@ public class homeScreenController {
     @FXML
     void runMachine(){
         data.runMachine = true;
-        if(data.runMachine){
-            startBtn.setText("Running");
-            startBtn.disableProperty().set(true);
-            stopBtn.disableProperty().set(false);
-            stopBtn.setText("Stop");
-        } else {
-            startBtn.setText("Start");
-            startBtn.disableProperty().set(false);
-            stopBtn.disableProperty().set(true);
-            stopBtn.setText("Stopped");
-        }
+        uiUpdateOnRunMachine();
     }
     @FXML
     void stopMachine(){
         data.runMachine = false;
+        uiUpdateOnRunMachine();
+    }
+
+    @FXML
+    void reverseWind() {
+        data.reverseWind = reverseWind.isSelected();
+    }
+    @FXML
+    void resumeCurrent(){
+        data.resumeCurrent = resumeCurrent.isSelected();
+    }
+    public void connected(){
+        uiUpdateOnRunMachine();
+    }
+
+    private void uiUpdateOnRunMachine() {
         if(data.runMachine){
             startBtn.setText("Running");
             startBtn.disableProperty().set(true);
             stopBtn.disableProperty().set(false);
             stopBtn.setText("Stop");
+            reverseWind.disableProperty().set(true);
+            resumeCurrent.disableProperty().set(true);
         } else {
             startBtn.setText("Start");
             startBtn.disableProperty().set(false);
             stopBtn.disableProperty().set(true);
             stopBtn.setText("Stopped");
+            reverseWind.disableProperty().set(false);
+            resumeCurrent.disableProperty().set(false);
         }
     }
 
-    public void connected(){
-        if(data.runMachine){
-            startBtn.setText("Running");
-            startBtn.disableProperty().set(true);
-            stopBtn.disableProperty().set(false);
-            stopBtn.setText("Stop");
-        } else {
-            startBtn.setText("Start");
-            startBtn.disableProperty().set(false);
-            stopBtn.disableProperty().set(true);
-            stopBtn.setText("Stopped");
-        }
-    }
     public void disConnected() {
         startBtn.disableProperty().set(true);
         stopBtn.disableProperty().set(true);

@@ -31,6 +31,8 @@ public class programController implements Initializable {
         data.reg.setTurns = Float.parseFloat(numTurns.getText());
         data.maxSpeed = (float)maxSpeed.getValue();
         data.startPower = (float)startPower.getValue();
+        data.wireSize = Float.parseFloat(sizeWire.getText());
+        data.bobenLength = Float.parseFloat(bobenLength.getText());
         data.saveData = true;
     }
 

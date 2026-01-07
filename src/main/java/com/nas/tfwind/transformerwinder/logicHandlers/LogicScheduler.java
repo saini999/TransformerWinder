@@ -46,6 +46,7 @@ public class LogicScheduler {
             model.getInstance().control.updateSettings = true;
         }
         SpindleHandler.getInstance().spindleTask();
+        StepperHandler.getInstance().runStepperTask();
 
 
         //at last after all tasks complete

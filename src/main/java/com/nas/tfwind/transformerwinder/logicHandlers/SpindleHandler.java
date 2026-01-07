@@ -11,7 +11,9 @@ public class SpindleHandler {
     private final model data = model.getInstance();
     public void spindleTask(){
         if(data.runMachine){
-            startSpindleProcess();
+            if(!data.stepperReady) {
+                startSpindleProcess();
+            }
         } else {
             stopSpindleProcess();
         }

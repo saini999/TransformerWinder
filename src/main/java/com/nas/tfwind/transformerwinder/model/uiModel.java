@@ -17,6 +17,7 @@ public class uiModel {
 
 
 
+
     //Functions
 
     public void setCurTurns(float v){
@@ -34,6 +35,8 @@ public class uiModel {
         final float nv = v;
         runFx(() -> showSpeed.set(nv));
     }
+
+
 
     public void setIsConnected(boolean v){
         runFx(() -> isConnected.set(v));

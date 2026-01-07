@@ -1,10 +1,7 @@
 package com.nas.tfwind.transformerwinder.modbus;
 
 import com.nas.tfwind.transformerwinder.logicHandlers.LogicScheduler;
-import com.nas.tfwind.transformerwinder.model.ControlAddr;
-import com.nas.tfwind.transformerwinder.model.ControlReg;
-import com.nas.tfwind.transformerwinder.model.RegAddr;
-import com.nas.tfwind.transformerwinder.model.model;
+import com.nas.tfwind.transformerwinder.model.*;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -42,7 +39,7 @@ public class mbIO {
             System.out.println("Start Sync");
             buildDataBlock();
             modbus.syncData();
-            updateUi();
+            handleResponse();
             System.out.println("Sync Complete");
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,6 +62,7 @@ public class mbIO {
         modbus.writeReg(RegAddr.ENC_RES.addr, data.reg.encRes);
         modbus.writeReg(RegAddr.STEP_RES.addr, data.reg.stepPerRev);
         modbus.setFloat(RegAddr.SCREW_PITCH.addr, data.reg.screwPitch);
+        modbus.setFloat(RegAddr.GEAR_RATIO.addr, data.reg.gearRatio);
     }
 
     private void updateUi() {
@@ -72,9 +70,19 @@ public class mbIO {
         data.ui.setCurTurns(modbus.getFloat(RegAddr.CUR_TURNS.addr));
         data.ui.setSetTurns(modbus.getFloat(RegAddr.SET_TURNS.addr));
         data.ui.setShowSpeed(modbus.getReg(RegAddr.SPEED.addr));
+        data.ui.showYpos(modbus.getFloat(RegAddr.CUR_YPOS.addr));
         data.reg.rpm = modbus.getFloat(RegAddr.RPM.addr);
         data.reg.curTurns = modbus.getFloat(RegAddr.CUR_TURNS.addr);
         data.reg.curYPos = modbus.getFloat(RegAddr.CUR_YPOS.addr);
+    }
+
+    private void handleResponse() {
+        data.control.updateSettings = modbus.getBitInReg(RegAddr.CONTROL.addr, ControlAddr.UPDATE_PARAMS.addr);
+        data.control.setStepZero = modbus.getBitInReg(RegAddr.CONTROL.addr, ControlAddr.ZEROSTEP.addr);
+        data.feedback.stepDone = modbus.getBitInReg(RegAddr.FEEDBACK.addr, FeedbackAddr.STEP_DONE.addr);
+        updateUi();
+        System.out.println("SetY: " + data.reg.setYPos);
+        System.out.println("CurY: " + data.reg.curYPos);
     }
 
 }

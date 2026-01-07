@@ -101,9 +101,9 @@ public class deviceSetupController {
             System.out.println(connected ? "✅ Connected!" : "❌ Failed to connect");
             if(connected) {
                 mbio.runModbusTask();
+                data.isConnected = true;
                 LogicScheduler.getInstance().start();
                 data.ui.setIsConnected(true);
-                data.isConnected = true;
             }
             if(connected && firstRun){
                 data.reg.encRes = 1600;
