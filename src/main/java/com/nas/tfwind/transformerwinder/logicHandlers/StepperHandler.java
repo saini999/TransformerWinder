@@ -8,19 +8,14 @@ public class StepperHandler {
     public static StepperHandler getInstance() { return INSTANCE;}
     private StepperHandler() {}
 
-    public void runStepperTask() {
+    public void runStepperTask() throws InterruptedException {
         //System.out.println("Running StepperTask");
         if (data.enableJog){
             if(Math.abs(data.reg.curYPos - data.reg.setYPos) <= 0.001f) {
                 data.control.moveStep = true;
+                data.stepperReady = false;
                 //System.out.println("Moving Stepper");
             }
-            /*
-            if(data.control.moveStep){
-                System.out.println("Move");
-            } else {
-                System.out.println("NoMove");
-            }*/
             return;
         }
 
@@ -46,7 +41,7 @@ public class StepperHandler {
                 data.reg.setYPos = data.workOffset;
                 data.control.moveStep = true;
 
-
+                Thread.sleep(1000);
                 if (data.feedback.stepDone) {
                     data.stepperReady = true;
                     data.control.moveStep = false;

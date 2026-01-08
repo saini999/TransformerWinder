@@ -13,6 +13,7 @@ public class uiModel {
     public FloatProperty showSpeed = new SimpleFloatProperty(0);
 
     public BooleanProperty isConnected = new SimpleBooleanProperty(false);
+    public BooleanProperty disableJog = new SimpleBooleanProperty(false);
 
 
 
@@ -41,6 +42,7 @@ public class uiModel {
     public void setIsConnected(boolean v){
         runFx(() -> isConnected.set(v));
     }
+    public void setDisableJog(boolean v){ runFx(() -> disableJog.set(v));}
 
     /* HELPER */
     private void runFx(Runnable r) {

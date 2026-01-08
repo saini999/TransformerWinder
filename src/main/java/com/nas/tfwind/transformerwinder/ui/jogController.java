@@ -34,21 +34,33 @@ public class jogController {
         stepSizeCurrent = stepSize.getValue();
         data.enableJog = false;
         disableJog(true);
-
+        data.ui.disableJog.addListener((observableValue, aBoolean, t1) -> {
+            if(data.ui.disableJog.getValue()){
+                disableJog(true);
+                data.enableJog = false;
+                enableJog.disableProperty().set(true);
+            } else {
+                disableJog(false);
+                data.enableJog = false;
+                enableJog.disableProperty().set(false);
+            }
+        });
     }
 
     @FXML
     void enableJog() {
-        if(data.enableJog){
-            data.enableJog = false;
-            System.out.println("Disabling Jog");
-            disableJog(true);
-        } else {
-            data.enableJog = true;
-            System.out.println("Enabling Jog");
-            disableJog(false);
+        if(!data.runMachine) {
+            if (data.enableJog) {
+                data.enableJog = false;
+                //System.out.println("Disabling Jog");
+                disableJog(true);
+            } else {
+                data.enableJog = true;
+                //System.out.println("Enabling Jog");
+                disableJog(false);
+            }
+            System.out.println("Jog Mode: " + data.enableJog);
         }
-        System.out.println("Jog Mode: " + data.enableJog);
     }
     @FXML
     void yNeg() {
@@ -66,6 +78,7 @@ public class jogController {
     void setZero() {
         data.control.setStepZero = true;
         data.reg.setYPos = 0;
+        data.reg.curYPos = 0;
     }
     @FXML
     void setWork() {
@@ -85,14 +98,10 @@ public class jogController {
     }
     @FXML
     void reverseDir() {
-        if(reverseDir.isSelected()) {
-            data.control.invertStepDir = true;
-        } else {
-            data.control.invertStepDir = false;
-        }
+        data.control.invertStepDir = reverseDir.isSelected();
     }
 
-    void disableJog(boolean v){
+    public void disableJog(boolean v){
         if(v){
             enableJog.setText("Enable Jog");
         } else {

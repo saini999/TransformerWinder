@@ -105,11 +105,6 @@ public class deviceSetupController {
                 LogicScheduler.getInstance().start();
                 data.ui.setIsConnected(true);
             }
-            if(connected && firstRun){
-                data.reg.encRes = 1600;
-                data.control.updateSettings = true;
-                firstRun = false;
-            }
         }
         isConnected = modbus.isConnected();
         updateStatus(isConnected);

@@ -27,14 +27,14 @@ public class mbIO {
         scheduler.shutdownNow();
     }
 
-    private boolean sync;
+
     private void updateModbus() {
         if(!modbus.isConnected()){
             scheduler.shutdownNow();
             LogicScheduler.getInstance().stop();
             return;
         }
-        sync = !sync;
+        data.control.sync = !data.control.sync;
         try {
             System.out.println("Start Sync");
             buildDataBlock();
@@ -46,10 +46,17 @@ public class mbIO {
         }
     }
 
+    boolean setZero = false;
+
     private void buildDataBlock() {
-        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.SYNC.addr, sync);
+        modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.SYNC.addr, data.control.sync);
         modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.MOVESTEP.addr, data.control.moveStep);
         modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.ZEROSTEP.addr, data.control.setStepZero);
+        if(data.control.setStepZero && !setZero){
+            data.reg.setYPos = 0f;
+            data.reg.curYPos = 0f;
+            setZero = true;
+        }
         modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.RESETENC.addr, data.control.resetEnc);
         modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.DIR_MOTOR.addr, data.control.motorDir);
         modbus.setBitInReg(RegAddr.CONTROL.addr, ControlAddr.RUN_MOTOR.addr, data.control.runMotor);
@@ -80,9 +87,14 @@ public class mbIO {
         data.control.updateSettings = modbus.getBitInReg(RegAddr.CONTROL.addr, ControlAddr.UPDATE_PARAMS.addr);
         data.control.setStepZero = modbus.getBitInReg(RegAddr.CONTROL.addr, ControlAddr.ZEROSTEP.addr);
         data.feedback.stepDone = modbus.getBitInReg(RegAddr.FEEDBACK.addr, FeedbackAddr.STEP_DONE.addr);
+        if(setZero){
+            data.reg.curYPos = 0f;
+            data.reg.setYPos = 0f;
+            setZero = false;
+        }
         updateUi();
-        System.out.println("SetY: " + data.reg.setYPos);
-        System.out.println("CurY: " + data.reg.curYPos);
+        //System.out.println("SetY: " + data.reg.setYPos);
+        //System.out.println("CurY: " + data.reg.curYPos);
     }
 
 }

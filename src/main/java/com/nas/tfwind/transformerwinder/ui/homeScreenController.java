@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class homeScreenController {
     private final model data = model.getInstance();
@@ -31,11 +32,11 @@ public class homeScreenController {
     @FXML
     public void initialize() {
         try {
-            AnchorPane jogPage = FXMLLoader.load(getClass().getResource("/com/nas/tfwind/transformerwinder/ui/jog.fxml"));
+            AnchorPane jogPage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/nas/tfwind/transformerwinder/ui/jog.fxml")));
             tabContainer.getTabs().get(0).setContent(jogPage);
-            AnchorPane programPage = FXMLLoader.load(getClass().getResource("/com/nas/tfwind/transformerwinder/ui/programSetup.fxml"));
+            AnchorPane programPage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/nas/tfwind/transformerwinder/ui/programSetup.fxml")));
             tabContainer.getTabs().get(1).setContent(programPage);
-            AnchorPane settingsPage = FXMLLoader.load(getClass().getResource("/com/nas/tfwind/transformerwinder/ui/deviceSetup.fxml"));
+            AnchorPane settingsPage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/nas/tfwind/transformerwinder/ui/deviceSetup.fxml")));
             tabContainer.getTabs().get(2).setContent(settingsPage);
             curTurns.textProperty().bind(Bindings.format("%.2f",data.ui.curTurns));
             setTurns.textProperty().bind(Bindings.format("%.2f",data.ui.setTurns));
@@ -61,11 +62,13 @@ public class homeScreenController {
     @FXML
     void runMachine(){
         data.runMachine = true;
+        data.ui.setDisableJog(true);
         uiUpdateOnRunMachine();
     }
     @FXML
     void stopMachine(){
         data.runMachine = false;
+        data.ui.setDisableJog(false);
         uiUpdateOnRunMachine();
     }
 
@@ -104,7 +107,6 @@ public class homeScreenController {
         stopBtn.disableProperty().set(true);
         resetBtn.disableProperty().set(true);
     }
-
 
 }
 

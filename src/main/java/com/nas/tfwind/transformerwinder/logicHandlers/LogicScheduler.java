@@ -29,7 +29,7 @@ public class LogicScheduler {
         running = false;
     }
 
-    private void safeRun() {
+    private void safeRun()  {
         try {
             runTasks();
         } catch (Throwable t) {
@@ -37,7 +37,7 @@ public class LogicScheduler {
         }
     }
 
-    void runTasks() {
+    void runTasks() throws InterruptedException {
         if(!model.getInstance().isConnected){
             executor.shutdownNow();
             running = false;

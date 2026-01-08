@@ -30,7 +30,7 @@ public class modbusHandler {
 
     private ModbusSerialMaster master;
     private final SerialParameters params = new SerialParameters();
-    private int slaveId = 1;
+    private final int slaveId = 1;
 
     private final int[] txRegs = new int[REG_COUNT]; // what we send
     private final int[] rxRegs = new int[REG_COUNT]; // what we receive
@@ -67,27 +67,27 @@ public class modbusHandler {
         return master != null && master.isConnected();
     }
 
-    public void setSlaveId(int id) {
+    /*public void setSlaveId(int id) {
         this.slaveId = id;
-    }
+    }*/
 
     // MEMORY HELPERS
 
     // Write full register (TX only)
     public void writeReg(int regIndex, int value) {
-        if (!validReg(regIndex)) return;
+        if (notValidReg(regIndex)) return;
         txRegs[regIndex] = value & 0xFFFF;
     }
 
     // Read full register (RX only)
     public int getReg(int regIndex) {
-        if (!validReg(regIndex)) return 0;
+        if (notValidReg(regIndex)) return 0;
         return rxRegs[regIndex];
     }
 
     // Set a single bit inside a register (TX only)
     public void setBitInReg(int regIndex, int bitIndex, boolean value) {
-        if (!validReg(regIndex) || bitIndex < 0 || bitIndex > 15) return;
+        if (notValidReg(regIndex) || bitIndex < 0 || bitIndex > 15) return;
 
         int mask = 1 << bitIndex;
         if (value) {
@@ -99,9 +99,11 @@ public class modbusHandler {
 
     // Get a single bit inside a register (RX only)
     public boolean getBitInReg(int regIndex, int bitIndex) {
-        if (!validReg(regIndex) || bitIndex < 0 || bitIndex > 15) return false;
+        if (notValidReg(regIndex) || bitIndex < 0 || bitIndex > 15) return false;
         return (rxRegs[regIndex] & (1 << bitIndex)) != 0;
     }
+
+    /*
 
     // clear TX register
     public void clearTxReg(int regIndex) {
@@ -129,16 +131,8 @@ public class modbusHandler {
         }
     }
 
+*/
 
-    public void setReg0(int val) throws ModbusException {
-        Register[] r = { new SimpleRegister(0)};
-        r[0].setValue(val);
-        master.writeMultipleRegisters(slaveId, REG_START_ADDR, r);
-    }
-    public int getReg0() throws ModbusException {
-        Register[] r = master.readMultipleRegisters(slaveId, REG_START_ADDR, REG_COUNT);
-        return r[0].getValue();
-    }
 
     public synchronized void syncData() throws ModbusException {
         ensureConnected();
@@ -166,8 +160,8 @@ public class modbusHandler {
 
     // other Helpers
 
-    private boolean validReg(int idx) {
-        return idx >= 0 && idx < REG_COUNT;
+    private boolean notValidReg(int idx) {
+        return idx < 0 || idx >= REG_COUNT;
     }
     public void setFloat(int regIdx, float value) {
         int bits = Float.floatToIntBits(value);

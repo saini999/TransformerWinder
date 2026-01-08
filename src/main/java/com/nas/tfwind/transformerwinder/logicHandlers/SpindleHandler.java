@@ -11,8 +11,10 @@ public class SpindleHandler {
     private final model data = model.getInstance();
     public void spindleTask(){
         if(data.runMachine){
-            if(!data.stepperReady) {
+            if(data.stepperReady) {
                 startSpindleProcess();
+            } else {
+                data.reg.speed = 0;
             }
         } else {
             stopSpindleProcess();
@@ -20,7 +22,7 @@ public class SpindleHandler {
     }
 
     void startSpindleProcess(){
-        if(data.reg.curTurns < data.reg.setTurns){
+        if(data.reg.curTurns < data.reg.setTurns && data.stepperReady){
             data.control.motorDir = !data.appRevSpindleDir;
             data.reg.speed = getSpeed(
                     data.reg.setTurns,
