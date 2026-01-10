@@ -1,0 +1,17 @@
+Windows: mvn clean package
+
+Linux:
+mvn clean package \
+  -Dinstaller.type=deb \
+  -Dwindows.console= \
+  -Dwindows.dir.chooser= \
+  -Dwindows.menu= \
+  -Dwindows.shortcut= \
+  -Dlinux.shortcut=--linux-shortcut
+
+  update:
+
+  Windows: mvn clean package -Pwindows
+  Linux ARM64: mvn clean package -Plinux-arm64
+  Linux x64: mvn clean package -Plinux-x64
+  MacOs: mvn clean package -Pmacos

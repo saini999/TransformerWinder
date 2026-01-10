@@ -1,5 +1,6 @@
 package com.nas.tfwind.transformerwinder.ui;
 
+import com.nas.tfwind.transformerwinder.model.AppSettings;
 import com.nas.tfwind.transformerwinder.model.model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +25,17 @@ public class programController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         setupNumberFields();
+        data.reg.setTurns = AppSettings.getTurns();
+        data.maxSpeed = AppSettings.getSpeed();
+        data.startPower = AppSettings.getPower();
+        data.wireSize = AppSettings.getWireSize();
+        data.bobenLength = AppSettings.getBobbin();
+        numTurns.setText(String.valueOf(data.reg.setTurns));
+        sizeWire.setText(String.valueOf(data.wireSize));
+        bobenLength.setText(String.valueOf(data.bobenLength));
+        maxSpeed.setValue(data.maxSpeed);
+        startPower.setValue(data.startPower);
+        data.saveData = true;
     }
 
     @FXML
@@ -34,6 +46,11 @@ public class programController implements Initializable {
         data.wireSize = Float.parseFloat(sizeWire.getText());
         data.bobenLength = Float.parseFloat(bobenLength.getText());
         data.saveData = true;
+        AppSettings.saveTurns(data.reg.setTurns);
+        AppSettings.saveSpeed(data.maxSpeed);
+        AppSettings.savePower(data.startPower);
+        AppSettings.saveWireSize(data.wireSize);
+        AppSettings.saveBobbin(data.bobenLength);
     }
 
     void setupNumberFields(){

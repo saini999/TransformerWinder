@@ -3,6 +3,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import com.nas.tfwind.transformerwinder.logicHandlers.LogicScheduler;
 import com.nas.tfwind.transformerwinder.modbus.mbIO;
 import com.nas.tfwind.transformerwinder.modbus.modbusHandler;
+import com.nas.tfwind.transformerwinder.model.AppSettings;
 import com.nas.tfwind.transformerwinder.model.model;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -45,6 +46,19 @@ public class deviceSetupController {
         boolean isConnected = modbus.isConnected();
         updateStatus(isConnected);
         setupNumberFields();
+        data.reg.encRes = AppSettings.getEnc();
+        data.reg.stepPerRev = AppSettings.getSteps();
+        data.reg.screwPitch = AppSettings.getScrew();
+        data.reg.gearRatio = AppSettings.getGear();
+        data.accelration = AppSettings.getAccel();
+        data.deccelration = AppSettings.getDecel();
+        encRes.setText(String.valueOf(data.reg.encRes));
+        stepPerRev.setText(String.valueOf(data.reg.stepPerRev));
+        screwPitch.setText(String.valueOf(data.reg.screwPitch));
+        gearRatio.setText(String.valueOf(data.reg.gearRatio));
+        acceleration.setText(String.valueOf(data.accelration));
+        deceleration.setText(String.valueOf(data.deccelration));
+        data.saveData = true;
     }
 
     private void updateStatus(boolean isConnected) {
@@ -119,6 +133,12 @@ public class deviceSetupController {
         data.accelration  = Math.min(Float.parseFloat(acceleration.getText()), 100.0f);
         data.deccelration = Math.min(Float.parseFloat(deceleration.getText()), 100.0f);
         data.saveData = true;
+        AppSettings.saveEnc(data.reg.encRes);
+        AppSettings.saveSteps(data.reg.stepPerRev);
+        AppSettings.saveScrew(data.reg.screwPitch);
+        AppSettings.saveGear(data.reg.gearRatio);
+        AppSettings.saveAccel(data.accelration);
+        AppSettings.saveDecel(data.deccelration);
     }
 
     private void setupNumberFields(){

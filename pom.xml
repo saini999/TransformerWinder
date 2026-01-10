@@ -6,7 +6,7 @@
 
     <groupId>com.nas.tfwind</groupId>
     <artifactId>TransformerWinder</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>TransformerWinder</name>
 
     <properties>
@@ -14,27 +14,17 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <junit.version>5.8.2</junit.version>
-        <javafx.version>21.0.8</javafx.version>
+        <javafx.version>21.0.5</javafx.version>
+        <main.class>com.nas.tfwind.transformerwinder.Launcher</main.class>
+        <launcher.name>TransformerWinder</launcher.name>
     </properties>
 
-
-
     <dependencies>
-        <!-- JavaFX cross-platform (no classifier) -->
+        <!-- JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ghgande</groupId>
-            <artifactId>j2mod</artifactId>
-            <version>LATEST</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fazecast</groupId>
-            <artifactId>jSerialComm</artifactId>
-            <version>2.10.3</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -45,6 +35,18 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
             <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- Modbus & Serial -->
+        <dependency>
+            <groupId>com.ghgande</groupId>
+            <artifactId>j2mod</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>2.10.3</version>
         </dependency>
 
         <!-- UI Libraries -->
@@ -126,7 +128,7 @@
 
     <build>
         <plugins>
-            <!-- Compile with Java 21 -->
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -137,8 +139,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Run from Maven -->
-            <!-- JavaFX Maven Plugin -->
+            <!-- JavaFX Maven Plugin (for development/testing) -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -147,53 +148,262 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>TransformerWinder</jlinkZipName>
-                            <jlinkImageName>TransformerWinderImage</jlinkImageName>
-                            <noManPages>true</noManPages>
-                            <stripDebug>true</stripDebug>
-                            <noHeaderFiles>true</noHeaderFiles>
+                            <mainClass>${main.class}</mainClass>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-                <plugin>
-                    <groupId>com.github.akman</groupId>
-                    <artifactId>jpackage-maven-plugin</artifactId>
-                    <version>0.1.5</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>jpackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
-            <!-- Shade plugin to build a fat JAR -->
+            <!-- Copy dependencies to lib folder -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>shade</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.nas.tfwind.transformerwinder.ui.homeScreen</mainClass>
-                                </transformer>
-                            </transformers>
+                            <outputDirectory>${project.build.directory}/jpackage-input/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                            <excludeArtifactIds>javafx-controls,javafx-fxml,javafx-web,javafx-base,javafx-graphics</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-javafx-jars</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
+                            <includeArtifactIds>javafx-controls,javafx-fxml,javafx-web,javafx-base,javafx-graphics</includeArtifactIds>
+                            <stripVersion>true</stripVersion>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Copy main JAR to jpackage input -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <outputDirectory>${project.build.directory}/jpackage-input</outputDirectory>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>${main.class}</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>javafx-controls.jar javafx-fxml.jar javafx-web.jar javafx-base.jar javafx-graphics.jar</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Default profile: Windows -->
+        <profile>
+            <id>windows</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}/jpackage-input</argument>
+                                        <argument>--name</argument>
+                                        <argument>${launcher.name}</argument>
+                                        <argument>--main-jar</argument>
+                                        <argument>${project.build.finalName}.jar</argument>
+                                        <argument>--main-class</argument>
+                                        <argument>${main.class}</argument>
+                                        <argument>--type</argument>
+                                        <argument>exe</argument>
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}/installer</argument>
+                                        <argument>--vendor</argument>
+                                        <argument>NoorAutomationSolutions</argument>
+                                        <argument>--app-version</argument>
+                                        <argument>${project.version}</argument>
+                                        <argument>--description</argument>
+                                        <argument>Transformer Winder Application</argument>
+                                        <argument>--win-console</argument>
+                                        <argument>--win-dir-chooser</argument>
+                                        <argument>--win-menu</argument>
+                                        <argument>--win-shortcut</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Linux ARM64 profile -->
+        <profile>
+            <id>linux-arm64</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}/jpackage-input</argument>
+                                        <argument>--name</argument>
+                                        <argument>${launcher.name}</argument>
+                                        <argument>--main-jar</argument>
+                                        <argument>${project.build.finalName}.jar</argument>
+                                        <argument>--main-class</argument>
+                                        <argument>${main.class}</argument>
+                                        <argument>--type</argument>
+                                        <argument>deb</argument>
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}/installer</argument>
+                                        <argument>--vendor</argument>
+                                        <argument>NoorAutomationSolutions</argument>
+                                        <argument>--app-version</argument>
+                                        <argument>${project.version}</argument>
+                                        <argument>--description</argument>
+                                        <argument>Transformer Winder Application</argument>
+                                        <argument>--linux-shortcut</argument>
+                                        <argument>--verbose</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Linux x64 profile -->
+        <profile>
+            <id>linux-x64</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}/jpackage-input</argument>
+                                        <argument>--name</argument>
+                                        <argument>${launcher.name}</argument>
+                                        <argument>--main-jar</argument>
+                                        <argument>${project.build.finalName}.jar</argument>
+                                        <argument>--main-class</argument>
+                                        <argument>${main.class}</argument>
+                                        <argument>--type</argument>
+                                        <argument>deb</argument>
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}/installer</argument>
+                                        <argument>--vendor</argument>
+                                        <argument>NoorAutomationSolutions</argument>
+                                        <argument>--app-version</argument>
+                                        <argument>${project.version}</argument>
+                                        <argument>--description</argument>
+                                        <argument>Transformer Winder Application</argument>
+                                        <argument>--linux-shortcut</argument>
+                                        <argument>--verbose</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- macOS profile (for future use) -->
+        <profile>
+            <id>macos</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}/jpackage-input</argument>
+                                        <argument>--name</argument>
+                                        <argument>${launcher.name}</argument>
+                                        <argument>--main-jar</argument>
+                                        <argument>${project.build.finalName}.jar</argument>
+                                        <argument>--main-class</argument>
+                                        <argument>${main.class}</argument>
+                                        <argument>--type</argument>
+                                        <argument>dmg</argument>
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}/installer</argument>
+                                        <argument>--vendor</argument>
+                                        <argument>NoorAutomationSolutions</argument>
+                                        <argument>--app-version</argument>
+                                        <argument>${project.version}</argument>
+                                        <argument>--description</argument>
+                                        <argument>Transformer Winder Application</argument>
+                                        <argument>--verbose</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

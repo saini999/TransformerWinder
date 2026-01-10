@@ -23,12 +23,17 @@ public class homeScreenController {
     @FXML
     private Slider overSpeed;
     @FXML
-    private Button startBtn, stopBtn, resetBtn, negYjog, posYjog;
+    private Label workOffset;
+    @FXML
+    private Button startBtn, stopBtn, resetBtn;
     @FXML
     private ComboBox<Float> stepSize;
 
     @FXML
     private CheckBox reverseWind, resumeCurrent;
+    float[] stepSizeList = {0.01f,0.1f,0.5f,1.0f,2.0f,5.0f,10.0f,50.0f,100.0f};
+
+    float stepSizeCurrent;
     @FXML
     public void initialize() {
         try {
@@ -42,6 +47,7 @@ public class homeScreenController {
             setTurns.textProperty().bind(Bindings.format("%.2f",data.ui.setTurns));
             rpm.textProperty().bind(Bindings.format("%.2f",data.ui.rpm));
             ypos.textProperty().bind(Bindings.format("%.2f",data.ui.yPos));
+            workOffset.textProperty().bind(Bindings.format("%.2f", data.ui.workOffset));
             curSpeed.progressProperty().bind(data.ui.showSpeed);
             startBtn.disableProperty().set(true);
             stopBtn.disableProperty().set(true);
@@ -55,6 +61,12 @@ public class homeScreenController {
             });
             reverseWind.selectedProperty().set(false);
             resumeCurrent.selectedProperty().set(false);
+            stepSize.getItems().clear();
+            for (float v : stepSizeList) {
+                stepSize.getItems().add(v);
+            }
+            stepSize.setValue(stepSizeList[1]); //0.1f default
+            stepSizeCurrent = stepSize.getValue();
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -70,6 +82,22 @@ public class homeScreenController {
         data.runMachine = false;
         data.ui.setDisableJog(false);
         uiUpdateOnRunMachine();
+    }
+
+    @FXML
+    void posWorkAdj() {
+        data.workOffset = data.workOffset + stepSizeCurrent;
+        data.ui.setWorkOffset(data.workOffset);
+    }
+    @FXML
+    void negWorkAdj(){
+        data.workOffset = data.workOffset - stepSizeCurrent;
+        data.ui.setWorkOffset(data.workOffset);
+    }
+
+    @FXML
+    void stepSize(){
+        stepSizeCurrent = stepSize.getValue();
     }
 
     @FXML

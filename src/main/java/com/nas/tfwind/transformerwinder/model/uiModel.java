@@ -6,6 +6,7 @@ import javafx.beans.property.*;
 public class uiModel {
     public FloatProperty curTurns = new SimpleFloatProperty(0);
     public FloatProperty setTurns = new SimpleFloatProperty(0);
+    public FloatProperty workOffset = new SimpleFloatProperty(0f);
     public FloatProperty rpm = new SimpleFloatProperty(0);
 
     public FloatProperty yPos = new SimpleFloatProperty(0);
@@ -35,6 +36,9 @@ public class uiModel {
         if(v<=255.0f){v = v / 255.0f;} else {v=1.0f;}
         final float nv = v;
         runFx(() -> showSpeed.set(nv));
+    }
+    public void setWorkOffset(float v){
+        runFx(() -> workOffset.set(v));
     }
 
 

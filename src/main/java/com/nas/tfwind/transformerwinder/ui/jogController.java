@@ -83,6 +83,7 @@ public class jogController {
     @FXML
     void setWork() {
         data.workOffset = data.reg.curYPos;
+        data.ui.setWorkOffset(data.workOffset);
     }
     @FXML
     void gotoZero() {

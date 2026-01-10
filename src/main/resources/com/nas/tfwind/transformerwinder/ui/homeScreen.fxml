@@ -93,7 +93,7 @@
             <String fx:value="btn" />
          </styleClass>
       </Button>
-      <Button fx:id="negYjog" layoutX="37.0" layoutY="276.0" mnemonicParsing="false" text="&lt; Y-">
+      <Button fx:id="negWorkAdj" layoutX="37.0" layoutY="276.0" mnemonicParsing="false" onAction="#negWorkAdj" text="&lt; Y-">
          <font>
             <Font size="18.0" />
          </font>
@@ -102,7 +102,7 @@
             <String fx:value="btn" />
          </styleClass>
       </Button>
-      <Button fx:id="posYjog" layoutX="252.0" layoutY="275.0" mnemonicParsing="false" text="Y+ &gt;">
+      <Button fx:id="posWorkAdj" layoutX="252.0" layoutY="275.0" mnemonicParsing="false" onAction="#posWorkAdj" text="Y+ &gt;">
          <font>
             <Font size="18.0" />
          </font>
@@ -116,13 +116,23 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="54.0" layoutY="324.0" text="Step Size: ">
+      <Label layoutX="26.0" layoutY="324.0" text="Step Size: ">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="stepSize" layoutX="151.0" layoutY="323.0" prefWidth="150.0" promptText="mm" />
+      <ComboBox fx:id="stepSize" layoutX="117.0" layoutY="323.0" onAction="#stepSize" prefHeight="23.0" prefWidth="65.0" promptText="mm" />
       <CheckBox fx:id="resumeCurrent" layoutX="82.0" layoutY="194.0" mnemonicParsing="false" onAction="#resumeCurrent" text="Resume Current" />
       <CheckBox fx:id="reverseWind" layoutX="214.0" layoutY="194.0" mnemonicParsing="false" onAction="#reverseWind" text="Reverse Wind" />
+      <Label layoutX="196.0" layoutY="324.0" text="Work Offset:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="workOffset" layoutX="297.0" layoutY="324.0" prefHeight="21.0" prefWidth="51.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
