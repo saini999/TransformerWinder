@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class homeScreen extends Application {
 
@@ -20,7 +21,7 @@ public class homeScreen extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 680, 400);
         scene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
         stage.setTitle("NAS: Transformer Winder");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/nas/tfwind/transformerwinder/icons/app_icon.jpg")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/nas/tfwind/transformerwinder/icons/app_icon.jpg"))));
         stage.setResizable(false);
         stage.setWidth(680);
         stage.setHeight(400);

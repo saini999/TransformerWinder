@@ -11,11 +11,9 @@ public class StepperHandler {
     public void runStepperTask() throws InterruptedException {
         //System.out.println("Running StepperTask");
         if (data.enableJog){
-            if(Math.abs(data.reg.curYPos - data.reg.setYPos) <= 0.001f) {
                 data.control.moveStep = true;
                 data.stepperReady = false;
                 //System.out.println("Moving Stepper");
-            }
             return;
         }
 
@@ -26,13 +24,13 @@ public class StepperHandler {
         }
 
         boolean canResume =
-                data.resumeCurrent &&
+                        data.resumeCurrent &&
                         data.reg.curYPos >= data.workOffset &&
                         data.reg.curYPos <= (data.workOffset + data.bobenLength);
 
         if (!data.stepperReady) {
 
-            // Resume immediately
+            // Resume
             if (canResume) {
                 data.stepperReady = true;
             }

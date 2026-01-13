@@ -64,11 +64,11 @@ public class jogController {
     }
     @FXML
     void yNeg() {
-        data.reg.setYPos = data.reg.curYPos - stepSizeCurrent;
+        data.reg.setYPos = data.reg.setYPos - stepSizeCurrent;
     }
     @FXML
     void yPos() {
-        data.reg.setYPos = data.reg.curYPos + stepSizeCurrent;
+        data.reg.setYPos = data.reg.setYPos + stepSizeCurrent;
     }
     @FXML
     void stepSize() {
